@@ -1,0 +1,1 @@
+flutter pub add provider flutter_tts sqflite path shared_preferences
