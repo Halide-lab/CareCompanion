@@ -1,10 +1,13 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'services/settings.dart';
 import 'screens/screens.dart';
+import 'services/db_factory.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  initDbFactory();
   final settings = AppSettings();
   await settings.load();
   runApp(ChangeNotifierProvider.value(value: settings, child: const CareApp()));
@@ -52,9 +55,28 @@ class CareApp extends StatelessWidget {
       builder: (context, child) => MediaQuery(
         data: MediaQuery.of(context)
             .copyWith(textScaler: TextScaler.linear(s.fontScale)),
-        child: child!,
+        child: PhoneFrame(child: child!),
       ),
       home: const HomeScreen(),
+    );
+  }
+}
+
+/// Web'de geniş ekranlarda uygulamayı telefon genişliğinde ortalar (telefonda ve Mac uygulamasında değişiklik yok).
+class PhoneFrame extends StatelessWidget {
+  final Widget child;
+  const PhoneFrame({super.key, required this.child});
+  @override
+  Widget build(BuildContext context) {
+    if (!kIsWeb) return child;
+    return ColoredBox(
+      color: const Color(0xFFE4E0D4),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 480),
+          child: ClipRect(child: child),
+        ),
+      ),
     );
   }
 }
