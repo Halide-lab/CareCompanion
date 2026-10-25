@@ -36,6 +36,7 @@ class CareApp extends StatelessWidget {
     return MaterialApp(
       title: kAppName,
       debugShowCheckedModeBanner: false,
+      navigatorObservers: [StopSpeechObserver(s)],
       theme: base.copyWith(
         textTheme: text.copyWith(
           bodyMedium: text.bodyMedium!.copyWith(fontSize: 19),
@@ -78,5 +79,15 @@ class PhoneFrame extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// Stops the speech when the user goes back, so the app does not keep reading.
+class StopSpeechObserver extends NavigatorObserver {
+  final AppSettings settings;
+  StopSpeechObserver(this.settings);
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    settings.stopSpeaking();
   }
 }
