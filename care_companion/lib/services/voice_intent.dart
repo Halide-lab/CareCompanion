@@ -343,7 +343,7 @@ const Map<String, Map<String, String>> kReplies = {
 
 const Map<String, Map<String, String>> kText = {
   'en': {
-    'greet': 'Hello Anna. How can I help you?',
+    'greet': 'Hello. How can I help you?',
     'notHeard': 'I did not hear anything. Tap the microphone and try again.',
     'sorry': 'Sorry, I did not catch that.',
     'tapHint': 'You can also tap an answer on the screen.',
@@ -370,7 +370,7 @@ const Map<String, Map<String, String>> kText = {
     'readAloudOff': 'Read aloud is off.',
   },
   'nl': {
-    'greet': 'Hallo Anna. Waarmee kan ik u helpen?',
+    'greet': 'Hallo. Waarmee kan ik u helpen?',
     'notHeard': 'Ik hoorde niets. Tik op de microfoon en probeer het opnieuw.',
     'sorry': 'Sorry, dat heb ik niet verstaan.',
     'tapHint': 'U kunt ook op een antwoord op het scherm tikken.',
@@ -397,7 +397,7 @@ const Map<String, Map<String, String>> kText = {
     'readAloudOff': 'Voorlezen staat uit.',
   },
   'tr': {
-    'greet': 'Merhaba Anna. Size nasıl yardımcı olabilirim?',
+    'greet': 'Merhaba. Size nasıl yardımcı olabilirim?',
     'notHeard': 'Bir şey duymadım. Mikrofona dokunup tekrar deneyin.',
     'sorry': 'Üzgünüm, anlayamadım.',
     'tapHint': 'Ekrandaki cevaplardan birine de dokunabilirsiniz.',

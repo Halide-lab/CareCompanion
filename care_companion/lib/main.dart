@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'services/settings.dart';
 import 'screens/screens.dart';
+import 'screens/welcome_screen.dart';
 import 'services/db_factory.dart';
 
 Future<void> main() async {
@@ -57,7 +58,7 @@ class CareApp extends StatelessWidget {
             .copyWith(textScaler: TextScaler.linear(s.fontScale)),
         child: PhoneFrame(child: child!),
       ),
-      home: const HomeScreen(),
+      home: s.onboarded ? const HomeScreen() : const WelcomeScreen(),
     );
   }
 }

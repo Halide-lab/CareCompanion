@@ -7,6 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppSettings extends ChangeNotifier {
   bool readAloud = false; // "Tıkladığını oku" aç/kapa
   double fontScale = 1.2; // yazı boyutu çarpanı
+  String userName = ''; // asked on first launch
+  bool get onboarded => userName.isNotEmpty;
   String lang = 'en'; // 'en', 'nl', 'tr' (ses komutları + sesli okuma dili)
   final FlutterTts _tts = FlutterTts();
   bool _voicePicked = false;
@@ -19,6 +21,7 @@ class AppSettings extends ChangeNotifier {
     readAloud = p.getBool('readAloud') ?? false;
     fontScale = p.getDouble('fontScale') ?? 1.2;
     lang = p.getString('lang') ?? 'en';
+    userName = p.getString('userName') ?? '';
     await _applyVoice();
   }
 
@@ -61,6 +64,12 @@ class AppSettings extends ChangeNotifier {
         _voicePicked = true;
       }
     } catch (_) {}
+  }
+
+  Future<void> setUserName(String v) async {
+    userName = v;
+    (await SharedPreferences.getInstance()).setString('userName', v);
+    notifyListeners();
   }
 
   Future<void> setReadAloud(bool v) async {

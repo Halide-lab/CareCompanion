@@ -5,6 +5,7 @@ import '../services/db.dart';
 import '../services/settings.dart';
 import '../widgets/widgets.dart';
 import 'voice_screen.dart';
+import 'welcome_screen.dart';
 
 void go(BuildContext c, Widget w) => Navigator.push(c, MaterialPageRoute(builder: (_) => w));
 Widget pad(List<Widget> kids) =>
@@ -23,7 +24,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final msg = '$_greeting, Anna. Choose a category.';
+    final name = context.watch<AppSettings>().userName;
+    final msg = '$_greeting${name.isEmpty ? '' : ', $name'}. Choose a category.';
 
     Widget tile(String t, IconData i, Color color, Widget page) => Expanded(
           child: HomeTile(
@@ -142,6 +144,8 @@ class SettingsScreen extends StatelessWidget {
         const SizedBox(height: 10),
         for (final l in const [['en', 'English'], ['nl', 'Nederlands'], ['tr', 'Türkçe']])
           ListTileCard(l[1], selected: s.lang == l[0], onTap: () => s.setLang(l[0])),
+        const SizedBox(height: 16),
+        BigButton('Change my name', outlined: true, onTap: () => go(context, const WelcomeScreen(editing: true))),
       ]),
     );
   }
@@ -208,7 +212,7 @@ class _BookingScreenState extends State<BookingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final titles = ['Choose a doctor', 'Choose a date', 'Choose a time', 'Choose a doctor', 'Check your booking', 'Confirmed'];
+    final titles = ['Type of appointment', 'Choose a date', 'Choose a time', 'Choose a doctor', 'Check your booking', 'Confirmed'];
     final bubbles = [
       'Step 1 of 5\nWho do you need to see?',
       'Step 2 of 5\nChoose an available date.',
@@ -219,7 +223,7 @@ class _BookingScreenState extends State<BookingScreen> {
     ];
     Widget body;
     VoidCallback? action;
-    String actionText = 'Confirm';
+    String actionText = 'Next';
     switch (step) {
       case 0:
         body = opts(['GP (Family Doctor)', 'Hospital Specialist'], type, (v) => type = v);
@@ -468,7 +472,7 @@ class HealthScreen extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('My Health')),
         body: pad([
-          const Bubble('Anna, choose a health category.'),
+          const Bubble('Choose a health category.'),
           const Text('Fictional information. Not medical advice.'),
           const SizedBox(height: 12),
           ListTileCard('Health Summary', subtitle: 'Conditions and allergies', icon: Icons.favorite_border,
@@ -517,21 +521,21 @@ class HelpScreen extends StatelessWidget {
         body: pad([
           const Text('How to Use the App', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
-          const Bubble('Hello Anna. I can guide you, one step at a time.'),
+          const Bubble('Hello. I can guide you, one step at a time.'),
           ListTileCard('Book an Appointment', subtitle: 'Help to arrange a visit', icon: Icons.calendar_month,
-              onTap: () => go(context, const Guide('Book an Appointment', "Let's arrange a visit, Anna.", [
+              onTap: () => go(context, const Guide('Book an Appointment', "Let's arrange a visit.", [
                     'Tap Continue to Appointments below.',
                     'On Appointments, tap Make an Appointment.',
                     'Choose doctor type, date, time and doctor. Check the details before you confirm.'
                   ], 'Continue to My Appointments', AppointmentsScreen()))),
           ListTileCard('Find My Medication', subtitle: 'Help to find a medicine', icon: Icons.medication,
-              onTap: () => go(context, const Guide('My Medications', "Let's see your medicine, Anna.", [
+              onTap: () => go(context, const Guide('My Medications', "Let's see your medicine.", [
                     'Tap Open My Medications below to see your list.',
                     'To find another medicine, tap Search Medication.',
                     'Tap the search box and type the medicine name. Then tap the matching result.'
                   ], 'Continue to My Medications', MyMedsScreen()))),
           ListTileCard('View My Health', subtitle: 'Help to read your record', icon: Icons.favorite_border,
-              onTap: () => go(context, const Guide('View My Health', "Let's look at your health record, Anna.", [
+              onTap: () => go(context, const Guide('View My Health', "Let's look at your health record.", [
                     'Tap Open My Health below.',
                     'Choose Health Summary, Medical History or Test Results.',
                     'Read that category. Tap back to return to My Health.'
