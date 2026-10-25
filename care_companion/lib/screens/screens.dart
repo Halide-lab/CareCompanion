@@ -31,20 +31,31 @@ class HomeScreen extends StatelessWidget {
         );
 
     return Scaffold(
-      floatingActionButton: Tap(
-        label: 'Talk to me',
-        radius: 24,
-        onTap: () => go(context, const VoiceScreen()),
-        child: Container(
-          width: sc(context, 78),
-          height: sc(context, 78),
-          decoration: BoxDecoration(
-              color: kGreen,
-              borderRadius: BorderRadius.circular(24),
-              boxShadow: const [
-                BoxShadow(color: Color(0x40000000), blurRadius: 14, offset: Offset(0, 6))
-              ]),
-          child: Icon(Icons.mic_none_rounded, color: Colors.white, size: sc(context, 38)),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Tap(
+          label: 'Talk to your assistant',
+          radius: 28,
+          onTap: () => go(context, const VoiceScreen()),
+          child: Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(vertical: sc(context, 18)),
+            decoration: BoxDecoration(
+                color: kGreen,
+                borderRadius: BorderRadius.circular(28),
+                boxShadow: const [
+                  BoxShadow(color: Color(0x40000000), blurRadius: 14, offset: Offset(0, 6))
+                ]),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Icon(Icons.mic_rounded, color: Colors.white, size: sc(context, 36)),
+              const SizedBox(width: 12),
+              const Flexible(
+                child: Text('Talk to your assistant',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: Colors.white)),
+              ),
+            ]),
+          ),
         ),
       ),
       body: SafeArea(
