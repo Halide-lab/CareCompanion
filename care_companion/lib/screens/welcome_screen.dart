@@ -5,7 +5,6 @@ import '../services/settings.dart';
 import '../widgets/widgets.dart';
 import 'screens.dart';
 
-/// Shown the first time the app opens: asks the name, language and text size.
 class WelcomeScreen extends StatefulWidget {
   final bool editing;
   const WelcomeScreen({super.key, this.editing = false});
