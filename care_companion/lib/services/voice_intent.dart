@@ -1,6 +1,3 @@
-// Söylenen cümleyi anlar. Çevrimdışı çalışır (anahtar kelime + yazım hatası toleransı).
-// İngilizce, Hollandaca ve Türkçe desteklenir.
-
 enum VoiceIntent {
   appointments,
   bookAppointment,
@@ -64,14 +61,10 @@ int _lev(String a, String b) {
   return prev[b.length];
 }
 
-// ------------------------------------------------------------------
-// Ana komut anlayıcı
-// ------------------------------------------------------------------
 VoiceCommand parseCommand(String text, List<String> medNames) {
   final s = _norm(text);
   final tk = _tokens(s);
 
-  // 1) Bir ilaç adı söylendi mi? (yazım hatası toleranslı: "ibuprofin" -> Ibuprofen)
   String? med;
   for (final n in medNames) {
     final key = _norm(n.split(' ').first);
@@ -93,12 +86,10 @@ VoiceCommand parseCommand(String text, List<String> medNames) {
     return VoiceCommand(ask ? VoiceIntent.medInfo : VoiceIntent.searchMedication, med);
   }
 
-  // 2) Ana sayfa
   if (_has(s, ['go home', 'home page', 'main screen', 'ana sayfa', 'anasayfa', 'startscherm', 'thuis'])) {
     return const VoiceCommand(VoiceIntent.home);
   }
 
-  // 3) Yazı boyutu
   if (_has(s, ['bigger', 'larger', 'increase', 'groter', 'vergroot', 'buyut', 'buyuk'])) {
     return const VoiceCommand(VoiceIntent.textBigger);
   }
@@ -106,7 +97,6 @@ VoiceCommand parseCommand(String text, List<String> medNames) {
     return const VoiceCommand(VoiceIntent.textSmaller);
   }
 
-  // 4) Sesli okuma aç/kapa
   if (_has(s, ['read aloud', 'voorlezen', 'sesli oku', 'sesli okuma'])) {
     const onWords = {'on', 'enable', 'aan', 'ac', 'open'};
     const offWords = {'off', 'disable', 'uit', 'kapat', 'kapa', 'stop'};
@@ -115,7 +105,6 @@ VoiceCommand parseCommand(String text, List<String> medNames) {
     return const VoiceCommand(VoiceIntent.settings);
   }
 
-  // 5) Randevu / doktor
   const apptWords = ['appointment', 'afspraak', 'afspraken', 'randevu', 'schedule', 'book '];
   const doctorWords = ['doctor', 'huisarts', 'dokter', 'doktor', 'hekim', 'specialist'];
   const listWords = [
@@ -142,7 +131,6 @@ VoiceCommand parseCommand(String text, List<String> medNames) {
     return const VoiceCommand(VoiceIntent.appointments);
   }
 
-  // 6) İlaçlar
   const medWords = [
     'medic', 'pill', 'tablet', 'drug', 'pharmac', 'ilac', 'medicijn',
     'geneesmiddel', 'apotheek', 'eczane'
@@ -161,7 +149,6 @@ VoiceCommand parseCommand(String text, List<String> medNames) {
     return const VoiceCommand(VoiceIntent.medications);
   }
 
-  // 7) Sağlık
   if (_has(s, [
     'health', 'gezondheid', 'saglik', 'saglig', 'test result', 'blood',
     'uitslag', 'sonuc', 'tahlil', 'history', 'geschiedenis', 'gecmis', 'allerg'
@@ -169,12 +156,10 @@ VoiceCommand parseCommand(String text, List<String> medNames) {
     return const VoiceCommand(VoiceIntent.health);
   }
 
-  // 8) Ayarlar
   if (_has(s, ['setting', 'instelling', 'ayar', 'text size', 'font'])) {
     return const VoiceCommand(VoiceIntent.settings);
   }
 
-  // 9) Yardım
   if (_has(s, ['help', 'hulp', 'yardim', 'how do', 'how to', 'nasil', 'hoe '])) {
     return const VoiceCommand(VoiceIntent.help);
   }
@@ -182,9 +167,6 @@ VoiceCommand parseCommand(String text, List<String> medNames) {
   return const VoiceCommand(VoiceIntent.unknown);
 }
 
-// ------------------------------------------------------------------
-// Randevu sohbeti için cevap çözücüler (index döndürür, anlamazsa null)
-// ------------------------------------------------------------------
 int? parseDoctorType(String text) {
   final s = _norm(text);
   if (_has(s, ['hospital', 'specialist', 'ziekenhuis', 'uzman', 'hastane'])) return 1;
@@ -268,7 +250,6 @@ int? parseOrdinal(String text, int count) {
   return null;
 }
 
-/// true = evet, false = hayır, null = anlaşılmadı
 bool? parseYesNo(String text) {
   final tk = _tokens(_norm(text));
   const yes = {
@@ -288,9 +269,6 @@ bool isCancel(String text) {
   return tk.any(c.contains);
 }
 
-// ------------------------------------------------------------------
-// Konuşulacak tarih / saat metinleri
-// ------------------------------------------------------------------
 const kWeekdays = {
   'en': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
   'nl': ['maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag', 'zondag'],
@@ -327,9 +305,6 @@ String timesSpoken(String lang, int n) {
   return n == 1 ? 'once a day' : '$n times a day';
 }
 
-// ------------------------------------------------------------------
-// Metinler
-// ------------------------------------------------------------------
 const Map<String, Map<String, String>> kReplies = {
   'en': {
     'appointments': 'Opening your appointments.',

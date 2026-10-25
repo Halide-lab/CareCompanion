@@ -16,7 +16,6 @@ const kGradient = LinearGradient(
 const kBubbleBg = Color(0xFFEAF3F0);
 const kBubbleBorder = Color(0xFFCFE0DB);
 
-/// Uygulama logosu: telefondaki uygulama ikonuyla aynı resim
 class AppLogo extends StatelessWidget {
   final double size;
   const AppLogo({super.key, this.size = 40});
@@ -27,7 +26,6 @@ class AppLogo extends StatelessWidget {
       );
 }
 
-/// Dokunulan her şey bunu kullanır: ayar açıksa label'ı okur, basınca hafifçe küçülür.
 class Tap extends StatefulWidget {
   final String label;
   final VoidCallback? onTap;
@@ -167,7 +165,6 @@ class ListTileCard extends StatelessWidget {
       );
 }
 
-/// Figma'daki karşılama kutusu: açık yeşil zemin, ince çerçeve, koyu yeşil avatar
 class Bubble extends StatelessWidget {
   final String text;
   const Bubble(this.text, {super.key});
@@ -201,8 +198,6 @@ class Bubble extends StatelessWidget {
       );
 }
 
-
-/// Ana ekran kutusu: basınca küçülür, kararır, gölgesi kısılır. Normalde koyu bir gölge taşır.
 class HomeTile extends StatefulWidget {
   final String label;
   final IconData icon;

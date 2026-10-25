@@ -23,7 +23,6 @@ class AppSettings extends ChangeNotifier {
   }
 
 
-  /// Normal speaking speed + the best (most natural) voice installed for the language.
   Future<void> _applyVoice() async {
     try {
       await _tts.setLanguage(ttsLocale);
@@ -84,7 +83,6 @@ class AppSettings extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// force=true: ayar kapalı olsa bile okur ("Listen" butonları ve sesli asistan için)
   Future<void> speak(String text, {bool force = false}) async {
     if (!readAloud && !force) return;
     if (!_voicePicked) await _applyVoice();
@@ -94,7 +92,6 @@ class AppSettings extends ChangeNotifier {
 
   Future<void> stopSpeaking() => _tts.stop();
 
-  /// Konuşur ve konuşma BİTİNCE döner (mikrofon kendi sesimizi duymasın diye).
   Future<void> speakAndWait(String text) async {
     if (!_voicePicked) await _applyVoice();
     await _tts.stop();

@@ -17,8 +17,8 @@ const kGreen = Color(0xFF245B58);
 const kOrange = Color(0xFFC97D2E);
 const kBg = Color(0xFFF5F1E8);
 const kInk = Color(0xFF1B2B2A);
-const kAppName = 'CareCompanion'; // uygulama adını buradan değiştir
-const kFont = 'Manrope'; // font dosyası yoksa sistem fontu kullanılır
+const kAppName = 'CareCompanion'; 
+const kFont = 'Manrope'; 
 
 class CareApp extends StatelessWidget {
   const CareApp({super.key});
@@ -62,7 +62,6 @@ class CareApp extends StatelessWidget {
   }
 }
 
-/// Web'de geniş ekranlarda uygulamayı telefon genişliğinde ortalar (telefonda ve Mac uygulamasında değişiklik yok).
 class PhoneFrame extends StatelessWidget {
   final Widget child;
   const PhoneFrame({super.key, required this.child});

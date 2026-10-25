@@ -48,7 +48,6 @@ class _VoiceScreenState extends State<VoiceScreen> {
     super.dispose();
   }
 
-  // ---------------- mikrofon ----------------
   Future<void> _init() async {
     final ok = await _stt.initialize(
       onError: (e) {
@@ -135,7 +134,6 @@ class _VoiceScreenState extends State<VoiceScreen> {
     if (mounted) setState(() => _listening = false);
   }
 
-  /// Agent konuşur, bitince dinlemeye başlar.
   Future<void> _ask(String text, {bool listen = true}) async {
     if (!mounted) return;
     setState(() {
@@ -159,7 +157,6 @@ class _VoiceScreenState extends State<VoiceScreen> {
     _navigate(page);
   }
 
-  // ---------------- gelen cümle ----------------
   Future<void> _onHeard(String text) async {
     if (!mounted) return;
     final heard = text.trim();
@@ -228,7 +225,6 @@ class _VoiceScreenState extends State<VoiceScreen> {
     }
   }
 
-  // ---------------- sesli cevaplar ----------------
   Future<void> _changeText(double delta) async {
     final cur = _s.fontScale;
     if (delta > 0 && cur >= 1.79) {
@@ -282,7 +278,6 @@ class _VoiceScreenState extends State<VoiceScreen> {
     _goPage(const AppointmentsScreen(), msg);
   }
 
-  // ---------------- randevu sohbeti ----------------
   void _resetFlow() {
     _step = _Step.idle;
     _typeI = _dateI = _timeI = _docI = null;
@@ -425,7 +420,6 @@ class _VoiceScreenState extends State<VoiceScreen> {
     await _ask(_t('cancelled'), listen: false);
   }
 
-  // ---------------- ekrandaki seçenekler ----------------
   List<String> _optionLabels() {
     switch (_step) {
       case _Step.type:

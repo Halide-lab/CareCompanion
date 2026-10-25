@@ -462,7 +462,6 @@ class MedInfoScreen extends StatelessWidget {
   }
 }
 
-// ---------------- MY HEALTH (örnek/fiktif veri) ----------------
 class HealthScreen extends StatelessWidget {
   const HealthScreen({super.key});
   @override
